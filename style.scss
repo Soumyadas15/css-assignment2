@@ -1,0 +1,198 @@
+$font-family: "aileron";
+
+// colors
+
+$color-purple: #80007E;
+$color-green: #D8DA3D;
+$color-orange: #FF7F00;
+$dashed-red: #D8DA3D;
+
+// Mixins
+
+@mixin flex-container($direction: column, $gap: 0) {
+    display: flex;
+    flex-direction: $direction;
+    gap: $gap;
+}
+
+@mixin font-face($style, $weight, $file) {
+    @font-face {
+        font-family: $font-family;
+        font-style: $style;
+        font-weight: $weight;
+        src: url("./#{$file}");
+    }
+}
+
+@mixin dashed-box($color) {
+    width: 100%;
+    height: 22%;
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='#{$color}' stroke-width='4' stroke-dasharray='6%2c 14' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding-left: 1rem;
+    font-style: normal;
+}
+
+@mixin bounce-animation {
+    &:hover {
+        animation: bounce 0.2s infinite alternate;
+    }
+
+    @keyframes bounce {
+        0% {
+            transform: translateY(0);
+        }
+        100% {
+            transform: translateY(-10px);
+        }
+    }
+}
+
+// Fonts
+
+@include font-face(italic, normal, 'Aileron-Italic.otf');
+@include font-face(normal, 100, 'Aileron-Regular.otf');
+@include font-face(bold, 200, 'Aileron-Bold.otf');
+
+
+// Main styling
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: $color-green;
+}
+
+p, h1 {
+    color: $color-purple;
+}
+
+h1 {
+    font-size: 2.4rem;
+    font-family: $font-family;
+}
+
+p {
+    font-size: 1.1rem;
+    font-weight: 100;
+}
+
+#main {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+#part1 {
+    height: 100%;
+    width: 18%;
+    display: flex;
+    justify-content: start;
+}
+
+#box {
+    height: 25%;
+    width: 90%;
+    margin: 40px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .sub-box {
+        background-color: white;
+        width: 100%;
+        height: 20%;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        padding-left: 0.5rem;
+        color: $color-purple;
+        font-size: 1.1rem;
+        font-weight: 100;
+    }
+}
+
+#part2 {
+    height: 100%;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    .texts {
+        margin: 10px 20px;
+        @include flex-container(column, 1.8rem);
+    }
+
+    .footer {
+        margin: 10px 20px;
+        @include flex-container(column, 1rem);
+
+        #line {
+            border: 1px dotted $color-purple;
+        }
+
+        .footer-part2 {
+            font-style: italic;
+        }
+    }
+
+    .border-boxes {
+        height: 18rem;
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        gap: 2rem;
+
+        .dashed-box-1 {
+            @include dashed-box($color: black);
+            justify-content: start;
+            padding-right: 1rem;
+        }
+
+        .dashed-box-2 {
+            @include dashed-box($color: red);
+            justify-content: end;
+            padding-right: 1rem;
+            font-style: italic;
+            cursor: pointer;
+            @include bounce-animation;
+        }
+
+        .dashed-box-3 {
+            width: 100%;
+            height: 22%;
+            border: 1px dashed #0000FF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-style: normal;
+            font-weight: bold;
+        }
+
+        .dashed-box-1 p,
+        .dashed-box-2 p,
+        .dashed-box-3 p {
+            color: black !important;
+        }
+        .dashed-box-3 p {
+            font-weight: bold;
+        }
+
+        .dashed-box-2 p {
+            font-weight: 200 !important;
+        }
+    }
+}
